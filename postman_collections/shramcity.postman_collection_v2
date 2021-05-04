@@ -1,0 +1,216 @@
+{
+	"info": {
+		"_postman_id": "f0232e9a-c9ca-46b8-9174-3d2487da9579",
+		"name": "shramcity",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Neel",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "neel@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "mobile",
+							"value": "1234567891",
+							"type": "text"
+						},
+						{
+							"key": "city_id",
+							"value": "952",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"type": "file"
+						},
+						{
+							"key": "address",
+							"value": "asasDA",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123456",
+							"type": "text"
+						},
+						{
+							"key": "gender",
+							"value": "0",
+							"description": "0- Male , 1 - Female",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/shramcity/api.php?register=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"shramcity",
+						"api.php"
+					],
+					"query": [
+						{
+							"key": "register",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check details already exists",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "mobile",
+							"value": "78787878778787878",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/shramcity/api.php?already_exists=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"shramcity",
+						"api.php"
+					],
+					"query": [
+						{
+							"key": "already_exists",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "neel@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123456",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/shramcity/api.php?login=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"shramcity",
+						"api.php"
+					],
+					"query": [
+						{
+							"key": "login",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Category",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "test",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/shramcity/api.php?get_category=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"shramcity",
+						"api.php"
+					],
+					"query": [
+						{
+							"key": "get_category",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get City",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost/shramcity/api.php?get_city=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"shramcity",
+						"api.php"
+					],
+					"query": [
+						{
+							"key": "get_city",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
