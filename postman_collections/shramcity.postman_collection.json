@@ -1,0 +1,179 @@
+{
+	"variables": [],
+	"info": {
+		"name": "shramcity",
+		"_postman_id": "fc7a31eb-e350-fe83-ef20-c74397985126",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"request": {
+				"url": {
+					"raw": "http://localhost/shramcity/api.php?register=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"shramcity",
+						"api.php"
+					],
+					"query": [
+						{
+							"key": "register",
+							"value": "1",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "firstname",
+							"value": "xyz",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "lastname",
+							"value": "kkk",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "kkk@gmail.com",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "mobile",
+							"value": "454545",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "city_id",
+							"value": "12",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"description": "",
+							"type": "file",
+							"src": "b1.jpg"
+						},
+						{
+							"key": "address",
+							"value": "kkk",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123123",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"url": {
+					"raw": "http://localhost/shramcity/api.php?login=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"shramcity",
+						"api.php"
+					],
+					"query": [
+						{
+							"key": "login",
+							"value": "1",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "crimapatel11@gmail.com",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123123",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Category",
+			"request": {
+				"url": {
+					"raw": "http://localhost/shramcity/api.php?get_category=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"shramcity",
+						"api.php"
+					],
+					"query": [
+						{
+							"key": "get_category",
+							"value": "1",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "test",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
