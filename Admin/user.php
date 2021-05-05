@@ -14,7 +14,7 @@ include_once "header.php";
                 <div class="statistic-block block">
                   <div class="progress-details d-flex align-items-end justify-content-between">
                     <div class="title">
-                      <div class="icon"><i class="icon-padnote"></i></div><strong>Products</strong>
+                      <div class="icon"><i class="icon-padnote"></i></div><strong>Users </strong>
                     </div>
                     <?php 
                      $query = "SELECT COUNT(*) as total FROM user";  
@@ -34,7 +34,7 @@ include_once "header.php";
 
               <div class="col-lg-12">
                 <div class="block margin-bottom-sm">
-                  <div class="title"><strong> Register Table</strong></div>
+                  <!-- <div class="title"><strong> Register Table</strong></div> -->
                   <div class="table-responsive"> 
                     <table class="table table-striped">
                       <thead>
@@ -48,7 +48,7 @@ include_once "header.php";
                           <th>mobile</th>
                           <th>city</th>
                           <th>category</th>
-                          <th>address</th>
+                          <!-- <th>address</th> -->
                           <th>Action</th>
                            
                         </tr>
@@ -73,7 +73,7 @@ include_once "header.php";
                           <td><?php  echo $row['mobile'];?></td>  
                           <td><?php  echo $row['city_name'];?></td>     
                           <td><?php  echo $row['category_name'];?></td>     
-                          <td><?php  echo $row['address'];?></td>
+                          
                           
                         
                           <td>

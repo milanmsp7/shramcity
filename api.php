@@ -65,13 +65,11 @@ if(isset($_POST))
 		          $img = basename($image);
 		          $filename = $path.$img;
 		          move_uploaded_file($_FILES['image']['tmp_name'],$filename);
-		    }else{
-		    	$image ="";
 		    }
 		    else
 		    {
 		    	$response['status']=false;
-			    $response['message']='Select Image';
+			    $response['data']['message']='Select Image';
 			    echo json_encode($response);exit;
 		    }
 	    
@@ -141,8 +139,8 @@ if(isset($_POST))
 	    if(!empty($count_user))
 	    {
 	    	$response['status']=true;
-		    $response['data']['message']='Login successfully';
 		    $response['data']=$count_user;
+		    $response['data']['message']='Login successfully';
 		    echo json_encode($response);exit;
 	    }
 	    else
@@ -203,22 +201,22 @@ if(isset($_POST))
 
 	    if ($city_id == "") {
 	    	$response['status']=false;
-	    	$response['message']='Please select city';
+	    	$response['data']['message']='Please select city';
 	    	echo json_encode($response);exit;
 	    }
 	    if ($user_id == "") {
 	    	$response['status']=false;
-	    	$response['message']='Please select user';
+	    	$response['data']['message']='Please select user';
 	    	echo json_encode($response);exit;
 	    }
 	    if ($category_id == "") {
 	    	$response['status']=false;
-	    	$response['message']='Please select category';
+	    	$response['data']['message']='Please select category';
 	    	echo json_encode($response);exit;
 	    }
 	    if ($description == "") {
 	    	$response['status']=false;
-	    	$response['message']='Please enter description';
+	    	$response['data']['message']='Please enter description';
 	    	echo json_encode($response);exit;
 	    }
 	    
@@ -240,7 +238,7 @@ if(isset($_POST))
 	    else
 	    {
 	    	$response['status']=false;
-		    $response['message']='Select Image';
+		    $response['data']['message']='Select Image';
 		    echo json_encode($response);exit;
 	    }
 
@@ -250,7 +248,7 @@ if(isset($_POST))
 	    if($result == 0 && empty($result))
 	    {
 	    	$response['status']=false;
-		    $response['message']='Category not Found';
+		    $response['data']['message']='Category not Found';
 		    echo json_encode($response);exit;
 	    }
 
@@ -259,7 +257,7 @@ if(isset($_POST))
 	    if($result == 0 && empty($result))
 	    {
 	    	$response['status']=false;
-		    $response['message']='City not Found';
+		    $response['data']['message']='City not Found';
 		    echo json_encode($response);exit;
 	    }
 
@@ -268,7 +266,7 @@ if(isset($_POST))
 	    if($result == 0 && empty($result))
 	    {
 	    	$response['status']=false;
-		    $response['message']='User not Found';
+		    $response['data']['message']='User not Found';
 		    echo json_encode($response);exit;
 	    }
 	    
@@ -278,7 +276,7 @@ if(isset($_POST))
     	if ($query != "") 
     	{
     	  	$response['status']=true;
-	    	$response['message']='Post Added';
+	    	$response['data']['message']='Post Added';
 	    	echo json_encode($response);exit;
     	} 
 	    echo json_encode($response);exit;
@@ -298,32 +296,32 @@ if(isset($_POST))
 
 	    if ($city_id == "") {
 	    	$response['status']=false;
-	    	$response['message']='Please select city';
+	    	$response['data']['message']='Please select city';
 	    	echo json_encode($response);exit;
 	    }
 	    if ($user_id == "") {
 	    	$response['status']=false;
-	    	$response['message']='Please select user';
+	    	$response['data']['message']='Please select user';
 	    	echo json_encode($response);exit;
 	    }
 	    if ($category_id == "") {
 	    	$response['status']=false;
-	    	$response['message']='Please select category';
+	    	$response['data']['message']='Please select category';
 	    	echo json_encode($response);exit;
 	    }
 	    if ($description == "") {
 	    	$response['status']=false;
-	    	$response['message']='Please enter description';
+	    	$response['data']['message']='Please enter description';
 	    	echo json_encode($response);exit;
 	    }
 	    if ($start_date == "") {
 	    	$response['status']=false;
-	    	$response['message']='Please enter start date';
+	    	$response['data']['message']='Please enter start date';
 	    	echo json_encode($response);exit;
 	    }
 	    if ($end_date == "") {
 	    	$response['status']=false;
-	    	$response['message']='Please enter end date';
+	    	$response['data']['message']='Please enter end date';
 	    	echo json_encode($response);exit;
 	    }
 	    
@@ -345,7 +343,7 @@ if(isset($_POST))
 	    else
 	    {
 	    	$response['status']=false;
-		    $response['message']='Select Image';
+		    $response['data']['message']='Select Image';
 		    echo json_encode($response);exit;
 	    }
 
@@ -355,7 +353,7 @@ if(isset($_POST))
 	    if($result == 0 && empty($result))
 	    {
 	    	$response['status']=false;
-		    $response['message']='Category not Found';
+		    $response['data']['message']='Category not Found';
 		    echo json_encode($response);exit;
 	    }
 
@@ -364,7 +362,7 @@ if(isset($_POST))
 	    if($result == 0 && empty($result))
 	    {
 	    	$response['status']=false;
-		    $response['message']='City not Found';
+		    $response['data']['message']='City not Found';
 		    echo json_encode($response);exit;
 	    }
 
@@ -373,7 +371,7 @@ if(isset($_POST))
 	    if($result == 0 && empty($result))
 	    {
 	    	$response['status']=false;
-		    $response['message']='User not Found';
+		    $response['data']['message']='User not Found';
 		    echo json_encode($response);exit;
 	    }
 	    
@@ -384,7 +382,7 @@ if(isset($_POST))
     	if ($query != "") 
     	{
     	  	$response['status']=true;
-	    	$response['message']='Advertisement Added';
+	    	$response['data']['message']='Advertisement Added';
 	    	echo json_encode($response);exit;
     	} 
 	    echo json_encode($response);exit;
@@ -398,12 +396,12 @@ if(isset($_POST))
 	    
 	    if ($post_id == "") {
 	    	$response['status']=false;
-	    	$response['message']='Please select post';
+	    	$response['data']['message']='Please select post';
 	    	echo json_encode($response);exit;
 	    }
 	    if ($user_id == "") {
 	    	$response['status']=false;
-	    	$response['message']='Please select user';
+	    	$response['data']['message']='Please select user';
 	    	echo json_encode($response);exit;
 	    }
 	   
@@ -413,7 +411,7 @@ if(isset($_POST))
 	    if($result == 0 && empty($result))
 	    {
 	    	$response['status']=false;
-		    $response['message']='Post not Found';
+		    $response['data']['message']='Post not Found';
 		    echo json_encode($response);exit;
 	    }
 
@@ -422,7 +420,7 @@ if(isset($_POST))
 	    if($result == 0 && empty($result))
 	    {
 	    	$response['status']=false;
-		    $response['message']='User not Found';
+		    $response['data']['message']='User not Found';
 		    echo json_encode($response);exit;
 	    }
 	    
@@ -432,7 +430,7 @@ if(isset($_POST))
     	if ($query != "") 
     	{
     	  	$response['status']=true;
-	    	$response['message']='Interest Added';
+	    	$response['data']['message']='Interest Added';
 	    	echo json_encode($response);exit;
     	} 
 	    echo json_encode($response);exit;

@@ -36,7 +36,7 @@ include_once "header.php";
 
               <div class="col-lg-12">
                 <div class="block margin-bottom-sm">
-                  <div class="title"><strong>advertisement Table</strong></div>
+                  
                   <div class="table-responsive"> 
                     <table class="table table-striped">
                       <thead>
@@ -47,11 +47,11 @@ include_once "header.php";
                           <th>Category</th>
                           <th>City</th>
                           <th>User</th>
-                          <th>Description</th>
+                          
                           <th>Start date</th>
                           <th>End date</th>
                           <th>status</th>
-                          <th>is_verify</th>
+                          
                           <th>Action</th>
                           
                         </tr>
@@ -61,17 +61,17 @@ include_once "header.php";
   <?php  
   include("db.php"); 
   $i = 1;  
-  $ret=mysqli_query($db,"SELECT * FROM `advertisement`");
+  $ret=mysqli_query($db,"SELECT *,(SELECT name FROM category WHERE id = advertisement.category_id) as category_name , (SELECT name FROM city WHERE id = advertisement.city_id) as city_name, (SELECT name FROM user WHERE id = advertisement.user_id) as user_name FROM `advertisement`");
   while ($row=mysqli_fetch_array($ret)) {
           
   ?>              
   </tr>
                           <th scope=><?php echo $i++; ?></th>
                           <td><img width="50px" id="img" height="50px" style="vertical-align: sub;" src="advertise_images/<?php echo $row['image']; ?>"></td>
-                          <td><?php  echo $row['category_id'];?></td>
-                          <td><?php  echo $row['city_id'];?></td>
-                          <td><?php  echo $row['user_id'];?></td>
-                          <td><?php  echo $row['description'];?></td>
+                          <td><?php  echo $row['category_name'];?></td>
+                          <td><?php  echo $row['city_name'];?></td>
+                          <td><?php  echo $row['user_name'];?></td>
+                          
                           <td><?php  echo date("d-m-Y",strtotime($row['start_date']));?></td>
                           <td><?php  echo date("d-m-Y",strtotime($row['end_date']));?></td>
                           
@@ -85,7 +85,7 @@ include_once "header.php";
                             <a href="approve.php?Approvec_advertise_id=<?php echo $row['id']; ?>" class="btn btn-success">Active</a>
                             <?php } ?>
                           </td>
-                          <td><?php  echo $row['is_verify'];?></td>
+                         
                            <td>
                             <a href="advertise_edit.php?del=<?php echo $row['id']; ?>" class="btn btn-success"><i class="fa fa-edit" title="Edit"></i></a>
                             <a href="delete_advertise.php?del=<?php echo $row['id']; ?>" class="btn btn-primary"><i class="fa fa-remove" title="Delete"></i></a>

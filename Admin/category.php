@@ -36,7 +36,7 @@ include_once "header.php";
 
               <div class="col-lg-12">
                 <div class="block margin-bottom-sm">
-                  <div class="title"><strong>Category Table</strong></div>
+                  
                   <div class="table-responsive"> 
                     <table class="table table-striped">
                       <thead>
@@ -45,8 +45,9 @@ include_once "header.php";
                           <th>Sr.No.</th>
                           <th>Image</th>
                           <th>Name</th>
-                          <th>Description</th>
+                          <!-- <th>Description</th> -->
                           <th>status</th>
+                          <th>Action</th>
                            
                         </tr>
                       </thead>
@@ -60,9 +61,10 @@ include_once "header.php";
   ?>              
   </tr>
                           <th scope=><?php echo $i++; ?></th>
-                          <td><?php  echo $row['name'];?></td>
+                          
                           <td><img width="50px" id="img" height="50px" style="vertical-align: sub;" src="category_images/<?php echo $row['image']; ?>"></td>
-                          <td><?php  echo $row['description'];?></td>
+                          <td><?php  echo $row['name'];?></td>
+                          
                           <td>
                             <?php if ($row['status'] == '0') { ?>
                             <a href="approve.php?unApprovec_id=<?php echo $row['id']; ?>" class="btn btn-warning">Deactive</a>

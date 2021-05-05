@@ -5,9 +5,7 @@ include_once "header.php";
 ?>
 
       <div class="page-content">
-        <div class="page-header">
-          <a class="btn btn-success" href="add_post.php">Add Post</a>
-        </div>
+       
         
         <section class="no-padding-top no-padding-bottom">
           <div class="container-fluid">
@@ -36,7 +34,7 @@ include_once "header.php";
 
               <div class="col-lg-12">
                 <div class="block margin-bottom-sm">
-                  <div class="title"><strong>POST INTEREST</strong></div>
+                  
                   <div class="table-responsive"> 
                     <table class="table table-striped">
                       <thead>
