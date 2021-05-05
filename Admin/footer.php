@@ -2,7 +2,7 @@
           <div class="footer__block block no-margin-bottom">
             <div class="container-fluid text-center">
              
-              <p class="no-margin-bottom">2021 &copy; Ayurkesh Ayurveda. Design by Shreena & Krima.</p>
+              <p class="no-margin-bottom">2021 &copy; Shramcity. </p>
             </div>
           </div>
         </footer>

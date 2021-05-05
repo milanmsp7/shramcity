@@ -3,7 +3,7 @@ $ac = 'product';
 include_once "header.php";
    $p_id=$_GET['del'];
 
-  $sql="SELECT * FROM `user` WHERE id='$p_id'";
+  $sql="SELECT * FROM `advertisement` WHERE id='$p_id'";
   $result = mysqli_query($db,$sql);
    
   $row = mysqli_fetch_array($result);
@@ -12,18 +12,19 @@ include_once "header.php";
   if (isset($_POST["submit"])) 
   {
     $p_id=$_GET['del'];
-    $name = $_POST['name'];
-    $email = $_POST['email'];
-    $mobile = $_POST['mobile'];
-    $gender = $_POST['gender'];
-    $city_id = $_POST['city_id'];
+    
     $category_id = $_POST['category_id'];
+    $city_id = $_POST['city_id'];
+    $user_id = $_POST['user_id'];
     $image = $_FILES['image']['name'];
-    $address = $_POST['address'];
-    $path = "user_images/";
+    $description = $_POST['description'];
+    $start_date = $_POST['start_date'];
+    $end_date = $_POST['end_date'];
+    $image = $_FILES['image']['name'];
+    $path = "advertise_images/";
 
-
-    if(isset($image) && !empty($image))
+        
+      if(isset($image) && !empty($image))
       {
 
         if(!is_dir($path))
@@ -35,19 +36,15 @@ include_once "header.php";
         $img = basename($image);
         $filename = $path.$img;
         move_uploaded_file($_FILES['image']['tmp_name'],$filename);
-        $sql="UPDATE `user` SET name='$name' , email = '$email' , mobile = '$mobile' , gender = '$gender' , city_id = '$city_id' , category_id = '$category_id' , image = '$img' , address = '$address'  WHERE id='$p_id'";
+        $sql="UPDATE `advertisement` SET category_id ='$category_id',city_id ='$city_id', user_id ='$user_id', description = '$description',image = '$img' , start_date = '$start_date' , end_date = '$end_date'  WHERE id='$p_id'";
       }
       else    
       {
-          $sql="UPDATE `user` SET name='$name' , email = '$email' , mobile = '$mobile' , gender = '$gender' , city_id = '$city_id' , category_id = '$category_id' , address = '$address'  WHERE id='$p_id'";
+          $sql="UPDATE `advertisement` SET category_id ='$category_id',city_id ='$city_id', user_id ='$user_id', description = '$description' , start_date = '$start_date' , end_date = '$end_date'  WHERE id='$p_id'";
       }
-
-    $result = mysqli_query($db,$sql);
-    if($result != "")
-    {
-         echo "<script>window.location = 'user.php';</script>";
-    }
+    mysqli_query($db,$sql);
     
+    echo "<script>window.location = 'advertise_detail.php';</script>";
   }
   
   if(isset($_POST['delete_img']))
@@ -106,35 +103,10 @@ include_once "header.php";
                 <div class="block">
                   <div class="block-body">
                     <form method="post" enctype="multipart/form-data">
-                      <div class="form-group">
-                        <label class="form-control-label">Name</label>
-                        <input type="text" name="name" value="<?= $row['name'];?>" class="form-control">
-                      </div>
 
-                       <div class="form-group">
-                        <label class="form-control-label">Email</label>
-                        <input type="text" name="email" value="<?= $row['email'];?>" class="form-control">
-                      </div>
-
-                      <div class="form-group">
-                        <label class="form-control-label">Mobile no.</label>
-                        <input type="number" name="mobile" value="<?= $row['mobile'];?>" class="form-control">
-                      </div>
-
-                         <div class="form-group">
-                             <label class="form-control-label">Gender</label><br>
-                             <input type="radio" name="gender" class="form-check-inline" value="0" <?= ($row['gender'] == 0) ? 'checked' : '' ?>  >Male<br>
-                             <input type="radio" name="gender" class="form-check-inline" value="1" <?= ($row['gender'] == 1) ? 'checked' : '' ?> >Female
-                         </div>
-                     
-                  
-                      <div class="form-group">
-                        <label class="form-control-label">Address</label>
-                        <textarea name="address" class="form-control" value><?= $row['address']; ?></textarea>
-                      </div>
                       <div class="form-group">
                         <label class="form-control-label">Category</label>
-                       <select name="category_id" class="form-control">
+                      <select name="category_id" class="form-control">
                         
                           <?php
                           echo $query="SELECT * FROM category";
@@ -170,6 +142,33 @@ include_once "header.php";
                           </select>
                         </div>
 
+                        <div class="form-group">
+                        <label class="form-control-label">user</label>
+                      <select name="user_id" class="form-control">
+                        
+                          <?php
+                          $query="SELECT * FROM user";
+                          $result=mysqli_query($db,$query);
+                          while($row1=mysqli_fetch_array($result))
+                          {
+
+                            ?>
+                            <option value="<?php echo $row1['id'] ?>" <?= (isset($row1['id']) && $row['user_id']==$row1['id'])?"selected":""; ?> ><?php echo $row1['name']?>
+                            </option>
+                            <?php
+                          }
+                          ?>
+                          </select>
+                        </div>
+
+                     
+                      
+                      <div class="form-group">
+                        <label class="form-control-label">Description</label>
+                        <input type="text" placeholder="Description" name="description" value="<?php echo $row['description']; ?>" class="form-control">
+                      </div>
+
+                     
                <div class="form-group">
                   <label class="form-control-label">Image</label>
                   <input type="file" class="form-control-file" name="image" id ="file" value="Update" onchange="readURL(this);" >
@@ -185,6 +184,16 @@ include_once "header.php";
                       </div>
                     </div>
                </div>
+
+               <div class="form-group">
+                        <label class="form-control-label">Start Date</label>
+                        <input type="date" name="start_date" value="<?= $row['start_date']; ?>" class="form-control" required="">
+                    </div>
+
+              <div class="form-group">
+                  <label class="form-control-label">End Date</label>
+                  <input type="date" name="end_date"  value="<?= $row['end_date']; ?>" class="form-control" required="">
+              </div>
                       <div class="form-group">       
                         <input type="submit" name="submit" value="Update" class="btn btn-primary">
                       </div>

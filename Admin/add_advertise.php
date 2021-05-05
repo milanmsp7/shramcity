@@ -5,20 +5,20 @@ include_once "header.php";
   if (isset($_POST["submit"])) 
   {
 
-    $name = $_POST['name'];
-    $email = $_POST['email'];
-    $mobile = $_POST['mobile'];
-    $gender = $_POST['gender'];
-    $city = $_POST['city'];
+    $city_id = $_POST['city_id'];
+    $user_id = $_POST['user_id'];
     $category_id = $_POST['category_id'];
     $image = $_FILES['image']['name'];
-    $address = $_POST['address'];
-    $password = md5($_POST['password']);
+    $description = $_POST['description'];
+    $start_date = $_POST['start_date'];
+    $end_date = $_POST['end_date'];
+    // echo date("Y-m-d",strtotime($_POST['start_Date']));
+    
 
     
      if(isset($image))
      {
-          $path = "user_images/";
+          $path = "advertise_images/";
 
           if(!is_dir($path))
           {
@@ -31,10 +31,13 @@ include_once "header.php";
           move_uploaded_file($_FILES['image']['tmp_name'],$filename);
      }
     
-     $sql="INSERT INTO user(name, email, mobile, gender, image, address, password,city_id , category_id)VALUES('$name','$email','$mobile','$gender','$img','$address','$password','$city' , '$category_id')"; 
+     $sql="INSERT INTO advertisement(category_id , city_id , user_id , description , image , start_date , end_date)VALUES('$category_id','$city_id','$user_id','$description','$img','$start_date','$end_date')"; 
     $query = mysqli_query($db,$sql);   
-   
-    echo "<script>window.location = 'user.php';</script>";
+   if($query != "")
+   {
+    echo "<script>window.location = 'advertise_detail.php';</script>";
+
+   }
   }
  
 ?>
@@ -80,55 +83,16 @@ include_once "header.php";
 
               <div class="col-lg-12">
                 <div class="block margin-bottom-sm">
-                  <div class="title"><strong>Registration</strong></div>
+                  <div class="title"><strong>POST</strong></div>
                   <div class="table-responsive"> 
                    <div class="col-lg-12">
                 <div class="block">
                   <div class="block-body">
                       
                     <form method="post" enctype="multipart/form-data">
-                      <div class="form-group">
-                        <label class="form-control-label">Name</label>
-                        <input type="text" name="name" placeholder="Name" class="form-control">
-                      </div>
 
-                       <div class="form-group">
-                        <label class="form-control-label">Email</label>
-                        <input type="text" name="email" placeholder="email" class="form-control">
-                      </div>
-
-                      <div class="form-group">
-                        <label class="form-control-label">Mobile no.</label>
-                        <input type="number" name="mobile" placeholder="mobile number" class="form-control">
-                      </div>
-
-                      <div class="form-group">
-                        <label class="form-control-label">Gender</label><br>
-                        <input type="radio" name="gender" class="form-check-inline" value="0">Male<br>
-                        <input type="radio" name="gender" class="form-check-inline" value="1">Female
-                      </div>
-                     
-                      <div class="form-group">
-                        <label class="form-control-label">City</label>
-                        
-                        <select name="city" class="form-control">
-                          <?php
-                          $query="SELECT * FROM city";
-                          $result=mysqli_query($db,$query);
-                          while($row=mysqli_fetch_array($result))
-                          {
-                            ?>
-                            <option value="<?php echo $row['id'] ?>"><?php echo $row['name']?>
-                            </option>
-                            <?php
-                          }
-                          ?>
-                          </select>
-                       
-                      </div>
-
-                      <div class="form-group">
-                      <label class="form-control-label">Category</label>
+                        <div class="form-group">
+                        <label class="form-control-label">Category</label>
                         
                         <select name="category_id" class="form-control">
                           <?php
@@ -145,23 +109,69 @@ include_once "header.php";
                           </select>
                        
                       </div>
-                    
-                       <div class="form-group">
+
+                      <div class="form-group">
+                        <label class="form-control-label">City</label>
+                        
+                        <select name="city_id" class="form-control">
+                          <?php
+                          $query="SELECT * FROM city";
+                          $result=mysqli_query($db,$query);
+                          while($row=mysqli_fetch_array($result))
+                          {
+                            ?>
+                            <option value="<?php echo $row['id'] ?>"><?php echo $row['name']?>
+                            </option>
+                            <?php
+                          }
+                          ?>
+                          </select>
+                       
+                      </div>
+
+                      <div class="form-group">
+                        <label class="form-control-label">User</label>
+                        
+                        <select name="user_id" class="form-control">
+                          <?php
+                          $query="SELECT * FROM user";
+                          $result=mysqli_query($db,$query);
+                          while($row=mysqli_fetch_array($result))
+                          {
+                            ?>
+                            <option value="<?php echo $row['id'] ?>"><?php echo $row['name']?>
+                            </option>
+                            <?php
+                          }
+                          ?>
+                          </select>
+                       
+                      </div>
+
+                    <div class="form-group">
+                        <label class="form-control-label">Description</label>
+                        <input type="text" name="description"  placeholder="Advertisement Description" class="form-control" required="">
+                    </div>
+
+                      
+                    <div class="form-group">
                         <label class="form-control-label">Image</label> 
                         <input type="file" class="form-control-file" name="image" value="Update" >
-                      </div>
-                  
-                      <div class="form-group">
-                        <label class="form-control-label">Address</label>
-                        <textarea name="address" placeholder="address" class="form-control"></textarea>
-                      </div>
+                    </div>
 
-                      <div class="form-group">
-                        <label class="form-control-label">password</label>
-                        <input type="password" placeholder="password"  name="password" class="form-control">
-                      </div>
+                    <div class="form-group">
+                        <label class="form-control-label">Start Date</label>
+                        <input type="date" name="start_date"  placeholder="start date " class="form-control" required="">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-control-label">End Date</label>
+                        <input type="date" name="end_date"  placeholder="end date" class="form-control" required="">
+                    </div>
+
                       
 
+                     
                      
 
                       <center><div class="form-group">       

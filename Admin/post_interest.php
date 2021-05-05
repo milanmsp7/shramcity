@@ -1,12 +1,14 @@
 <?php 
+
 include_once "header.php";
    
 ?>
 
       <div class="page-content">
         <div class="page-header">
-          <a class="btn btn-success" href="register.php">Register</a>
+          <a class="btn btn-success" href="add_post.php">Add Post</a>
         </div>
+        
         <section class="no-padding-top no-padding-bottom">
           <div class="container-fluid">
             <div class="row">
@@ -14,10 +16,10 @@ include_once "header.php";
                 <div class="statistic-block block">
                   <div class="progress-details d-flex align-items-end justify-content-between">
                     <div class="title">
-                      <div class="icon"><i class="icon-padnote"></i></div><strong>Products</strong>
+                      <div class="icon"><i class="icon-grid"></i></div><strong>POST Interest</strong>
                     </div>
                     <?php 
-                     $query = "SELECT COUNT(*) as total FROM user";  
+                     $query = "SELECT COUNT(*) as total FROM post_interest";  
                      $result = mysqli_query($db, $query); 
                       while($row1 = mysqli_fetch_assoc($result))  
                   {  
@@ -34,23 +36,23 @@ include_once "header.php";
 
               <div class="col-lg-12">
                 <div class="block margin-bottom-sm">
-                  <div class="title"><strong> Register Table</strong></div>
+                  <div class="title"><strong>POST INTEREST</strong></div>
                   <div class="table-responsive"> 
                     <table class="table table-striped">
                       <thead>
                         <tr>
-                             
-                          <th>id</th>
+                         
+                          <th>Sr.no</th>
+                          <!-- <th>post id</th>
+                          <th>user id</th> -->
+
                           <th>Image</th>
-                          <th>Name</th>
-                          <th>email</th>
-                          <th>Gender</th>
-                          <th>mobile</th>
-                          <th>city</th>
-                          <th>category</th>
-                          <th>address</th>
+                          <th>Post Owner</th>
+                          <th>UserName</th>
+                          <th>Mobile No.</th>
+                          
                           <th>Action</th>
-                           
+                          
                         </tr>
                       </thead>
                       <tbody>
@@ -58,28 +60,30 @@ include_once "header.php";
   <?php  
   include("db.php"); 
   $i = 1;  
-  $ret=mysqli_query($db,"SELECT *,(SELECT name FROM category WHERE id = user.category_id) as category_name , (SELECT name FROM city WHERE id = user.city_id) as city_name FROM `user`");
-
+  $ret=mysqli_query($db,"SELECT post_interest.*,user.name,user.mobile,post.image,(SELECT name FROM user WHERE id=post.user_id) as post_owner FROM post_interest
+       LEFT JOIN user
+       ON user.id = post_interest.user_id
+       LEFT JOIN post
+       ON post.id = post_interest.post_id");
   while ($row=mysqli_fetch_array($ret)) {
-    // print_r($row);
-
+          
   ?>              
   </tr>
-                          <th scope=><?php echo $i++; ?></th>
-                          <td><img width="50px" id="img" height="50px" style="vertical-align: sub;" src="user_images/<?php echo $row['image']; ?>"></td>
-                          <td><?php  echo $row['name'];?></td>
-                          <td><?php  echo $row['email'];?></td>
-                          <td><?php  echo isset($row['gender']) && $row['gender'] == '1' ? 'Female':'Male';?></td>
-                          <td><?php  echo $row['mobile'];?></td>  
-                          <td><?php  echo $row['city_name'];?></td>     
-                          <td><?php  echo $row['category_name'];?></td>     
-                          <td><?php  echo $row['address'];?></td>
+                         <th scope=><?php echo $i++; ?></th>
+                         <th><img width="50px" id="img" height="50px" style="vertical-align: sub;" src="post_images/<?php echo $row['image']; ?>"></th>
+                         <td><?php  echo $row['post_owner'];?></td>
                           
-                        
-                          <td>
-                            <a href="register_edit.php?del=<?php echo $row['id']; ?>" class="btn btn-success"><i class="fa fa-edit" title="Edit"></i></a>
-                            <a href="delete_regi.php?del=<?php echo $row['id']; ?>" class="btn btn-primary"><i class="fa fa-remove" title="Delete"></i></a>
-                          </td>
+                         <td><?php  echo $row['name'];?></td>
+                         <td><?php  echo $row['mobile'];?></td>
+                          
+                         <td>
+                            
+                            <a href="delete_post_interest.php?del=<?php echo $row['id']; ?>" class="btn btn-primary"><i class="fa fa-remove" title="Delete"></i></a>
+                         </td>
+
+                          
+                          
+                          
     <?php } ?>
                         </tr>
                         

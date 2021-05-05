@@ -17,7 +17,7 @@ if(isset($_POST))
 	    $mobile = isset($_POST['mobile'])?xss_clean($_POST['mobile']):'';
 	    $gender = isset($_POST['gender'])?xss_clean($_POST['gender']):'';
 	    $city_id = isset($_POST['city_id'])?xss_clean($_POST['city_id']):'';
-	    $image = $_FILES['image']['name'];
+	    $image = isset($_FILES['image']['name'])?$_FILES['image']['name']:'';
 	    $address = isset($_POST['address'])?xss_clean($_POST['address']):'';
 	    $password = md5($_POST['password']);
 
@@ -57,7 +57,7 @@ if(isset($_POST))
 
 	    if($count == 0)
 	    {
-	    	if(isset($image))
+	    	if(isset($image) && !empty($image))
 		    {
 		          $path = "Admin/user_images/";
 
@@ -70,6 +70,12 @@ if(isset($_POST))
 		          $img = basename($image);
 		          $filename = $path.$img;
 		          move_uploaded_file($_FILES['image']['tmp_name'],$filename);
+		    }
+		    else
+		    {
+		    	$response['status']=false;
+			    $response['message']='Select Image';
+			    echo json_encode($response);exit;
 		    }
 	    
 	     	$sql="INSERT INTO user(name, email, mobile, gender, image, address, password,city_id)VALUES('$name','$email','$mobile','$gender','$img','$address','$password','$city_id')"; 
@@ -138,11 +144,252 @@ if(isset($_POST))
 		    $response['message']='No category found';
 		    echo json_encode($response);exit;
 	    }
-	    
+	     
+	}
 
+	if(isset($_GET['post']) && !empty($_GET['post']) && $_GET['post'] == '1')
+	{
 
+		$city_id = isset($_POST['city_id'])? xss_clean($_POST['city_id']):'';
+	    $user_id = isset($_POST['user_id'])?  xss_clean($_POST['user_id']):'';
+	    $category_id = isset($_POST['category_id'])? xss_clean($_POST['category_id']):'';
+	    $image = isset($_FILES['image']['name'])?$_FILES['image']['name']:'';
+	    $description = isset($_POST['description'])? xss_clean($_POST['description']):'';
+
+	    if ($city_id == "") {
+	    	$response['status']=false;
+	    	$response['message']='Please select city';
+	    	echo json_encode($response);exit;
+	    }
+	    if ($user_id == "") {
+	    	$response['status']=false;
+	    	$response['message']='Please select user';
+	    	echo json_encode($response);exit;
+	    }
+	    if ($category_id == "") {
+	    	$response['status']=false;
+	    	$response['message']='Please select category';
+	    	echo json_encode($response);exit;
+	    }
+	    if ($description == "") {
+	    	$response['status']=false;
+	    	$response['message']='Please enter description';
+	    	echo json_encode($response);exit;
+	    }
 	    
+	    
+    	if(isset($image) && !empty($image))
+	    {
+          	$path = "Admin/post_images/";
+
+	        if(!is_dir($path))
+	        {
+	            mkdir($path);
+	            chmod($path,0755);
+	        }
+
+		    $img = basename($image);
+		    $filename = $path.$img;
+	        move_uploaded_file($_FILES['image']['tmp_name'],$filename);
+	    }
+	    else
+	    {
+	    	$response['status']=false;
+		    $response['message']='Select Image';
+		    echo json_encode($response);exit;
+	    }
+
+	    // $category_find = "SELECT * FROM category WHERE id = '$category_id'";
+	    $category_find = mysqli_query($db,"SELECT * FROM category WHERE id = '$category_id'");
+	    $result = mysqli_num_rows($category_find);
+	    if($result == 0 && empty($result))
+	    {
+	    	$response['status']=false;
+		    $response['message']='Category not Found';
+		    echo json_encode($response);exit;
+	    }
+
+	    $city_find = mysqli_query($db,"SELECT * FROM city WHERE id = '$city_id'");
+	    $result = mysqli_num_rows($city_find);
+	    if($result == 0 && empty($result))
+	    {
+	    	$response['status']=false;
+		    $response['message']='City not Found';
+		    echo json_encode($response);exit;
+	    }
+
+	    $user_find = mysqli_query($db,"SELECT * FROM user WHERE id = '$user_id'");
+	    $result = mysqli_num_rows($user_find);
+	    if($result == 0 && empty($result))
+	    {
+	    	$response['status']=false;
+		    $response['message']='User not Found';
+		    echo json_encode($response);exit;
+	    }
+	    
+	    $sql="INSERT INTO post(category_id , city_id , user_id , description , image)VALUES('$category_id','$city_id','$user_id','$description','$img')"; 
+	    $query = mysqli_query($db,$sql);   
     	
+    	if ($query != "") 
+    	{
+    	  	$response['status']=true;
+	    	$response['message']='Post Added';
+	    	echo json_encode($response);exit;
+    	} 
+	    echo json_encode($response);exit;
+	   
+	}
+
+	if(isset($_GET['advertisement']) && !empty($_GET['advertisement']) && $_GET['advertisement'] == '1')
+	{
+
+		$city_id = isset($_POST['city_id'])? xss_clean($_POST['city_id']):'';
+	    $user_id = isset($_POST['user_id'])?  xss_clean($_POST['user_id']):'';
+	    $category_id = isset($_POST['category_id'])? xss_clean($_POST['category_id']):'';
+	    $image = isset($_FILES['image']['name'])?$_FILES['image']['name']:'';
+	    $description = isset($_POST['description'])? xss_clean($_POST['description']):'';
+	    $start_date = isset($_POST['start_date'])? xss_clean($_POST['start_date']):'';
+	    $end_date = isset($_POST['end_date'])? xss_clean($_POST['end_date']):'';
+
+	    if ($city_id == "") {
+	    	$response['status']=false;
+	    	$response['message']='Please select city';
+	    	echo json_encode($response);exit;
+	    }
+	    if ($user_id == "") {
+	    	$response['status']=false;
+	    	$response['message']='Please select user';
+	    	echo json_encode($response);exit;
+	    }
+	    if ($category_id == "") {
+	    	$response['status']=false;
+	    	$response['message']='Please select category';
+	    	echo json_encode($response);exit;
+	    }
+	    if ($description == "") {
+	    	$response['status']=false;
+	    	$response['message']='Please enter description';
+	    	echo json_encode($response);exit;
+	    }
+	    if ($start_date == "") {
+	    	$response['status']=false;
+	    	$response['message']='Please enter start date';
+	    	echo json_encode($response);exit;
+	    }
+	    if ($end_date == "") {
+	    	$response['status']=false;
+	    	$response['message']='Please enter end date';
+	    	echo json_encode($response);exit;
+	    }
+	    
+	    
+    	if(isset($image) && !empty($image))
+	    {
+          	$path = "Admin/advertise_images/";
+
+	        if(!is_dir($path))
+	        {
+	            mkdir($path);
+	            chmod($path,0755);
+	        }
+
+		    $img = basename($image);
+		    $filename = $path.$img;
+	        move_uploaded_file($_FILES['image']['tmp_name'],$filename);
+	    }
+	    else
+	    {
+	    	$response['status']=false;
+		    $response['message']='Select Image';
+		    echo json_encode($response);exit;
+	    }
+
+	    // $category_find = "SELECT * FROM category WHERE id = '$category_id'";
+	    $category_find = mysqli_query($db,"SELECT * FROM category WHERE id = '$category_id'");
+	    $result = mysqli_num_rows($category_find);
+	    if($result == 0 && empty($result))
+	    {
+	    	$response['status']=false;
+		    $response['message']='Category not Found';
+		    echo json_encode($response);exit;
+	    }
+
+	    $city_find = mysqli_query($db,"SELECT * FROM city WHERE id = '$city_id'");
+	    $result = mysqli_num_rows($city_find);
+	    if($result == 0 && empty($result))
+	    {
+	    	$response['status']=false;
+		    $response['message']='City not Found';
+		    echo json_encode($response);exit;
+	    }
+
+	    $user_find = mysqli_query($db,"SELECT * FROM user WHERE id = '$user_id'");
+	    $result = mysqli_num_rows($user_find);
+	    if($result == 0 && empty($result))
+	    {
+	    	$response['status']=false;
+		    $response['message']='User not Found';
+		    echo json_encode($response);exit;
+	    }
+	    
+	    $sql="INSERT INTO advertisement(category_id , city_id , user_id , description , image , start_date , end_date)VALUES('$category_id','$city_id','$user_id','$description','$img','$start_date','$end_date')"; 
+    	$query = mysqli_query($db,$sql);   
+    	
+    	if ($query != "") 
+    	{
+    	  	$response['status']=true;
+	    	$response['message']='Advertisement Added';
+	    	echo json_encode($response);exit;
+    	} 
+	    echo json_encode($response);exit;
+	   
+	}
+	if(isset($_GET['post_interest']) && !empty($_GET['post_interest']) && $_GET['post_interest'] == '1')
+	{
+
+		$post_id = isset($_POST['post_id'])? xss_clean($_POST['post_id']):'';
+	    $user_id = isset($_POST['user_id'])?  xss_clean($_POST['user_id']):'';
+	    
+	    if ($post_id == "") {
+	    	$response['status']=false;
+	    	$response['message']='Please select post';
+	    	echo json_encode($response);exit;
+	    }
+	    if ($user_id == "") {
+	    	$response['status']=false;
+	    	$response['message']='Please select user';
+	    	echo json_encode($response);exit;
+	    }
+	   
+	   
+	    $post_find = mysqli_query($db,"SELECT * FROM post WHERE id = '$post_id'");
+	    $result = mysqli_num_rows($post_find);
+	    if($result == 0 && empty($result))
+	    {
+	    	$response['status']=false;
+		    $response['message']='Post not Found';
+		    echo json_encode($response);exit;
+	    }
+
+	    $user_find = mysqli_query($db,"SELECT * FROM user WHERE id = '$user_id'");
+	    $result = mysqli_num_rows($user_find);
+	    if($result == 0 && empty($result))
+	    {
+	    	$response['status']=false;
+		    $response['message']='User not Found';
+		    echo json_encode($response);exit;
+	    }
+	    
+	     $sql="INSERT INTO post_interest( post_id , user_id )VALUES('$post_id','$user_id')"; 
+	    $query = mysqli_query($db,$sql);   
+    	
+    	if ($query != "") 
+    	{
+    	  	$response['status']=true;
+	    	$response['message']='Interest Added';
+	    	echo json_encode($response);exit;
+    	} 
+	    echo json_encode($response);exit;
 	   
 	}
 	echo json_encode($response);exit;
