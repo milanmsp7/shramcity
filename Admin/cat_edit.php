@@ -112,7 +112,7 @@ include_once "header.php";
                           
                             <br>
                             <div class="container1" id="img_hide">
-                              <img width="80px" id="img" height="80px" style="vertical-align: sub;" src="user_images/<?php echo $row['image']; ?>">
+                              <img width="80px" id="img" height="80px" style="vertical-align: sub;" src="category_images/<?php echo $row['image']; ?>">
                               <br>
                               <?php echo $row['image']; ?>
                               <div class="middle">

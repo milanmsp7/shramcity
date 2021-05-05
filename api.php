@@ -15,6 +15,7 @@ if(isset($_POST))
 	    $mobile = isset($_POST['mobile'])?xss_clean($_POST['mobile']):'';
 	    $gender = isset($_POST['gender'])?xss_clean($_POST['gender']):'';
 	    $city_id = isset($_POST['city_id'])?xss_clean($_POST['city_id']):'';
+	    $category_id = isset($_POST['category_id'])?xss_clean($_POST['category_id']):'';
 	    $image = isset($_FILES['image']['name'])?$_FILES['image']['name']:'';
 	    $address = isset($_POST['address'])?xss_clean($_POST['address']):'';
 	    $password = md5($_POST['password']);
@@ -45,6 +46,19 @@ if(isset($_POST))
 	    	$response['data']['message']='Please select city';
 	    	echo json_encode($response);exit;
 	    }
+	    if ($category_id == "") {
+	    	$response['status']=false;
+	    	$response['data']['message']='Please select category';
+	    	echo json_encode($response);exit;
+	    }
+	    $category_find = mysqli_query($db,"SELECT * FROM category WHERE id = '$category_id'");
+	    $result = mysqli_num_rows($category_find);
+	    if($result == 0 && empty($result))
+	    {
+	    	$response['status']=false;
+		    $response['data']['message']='Category not Found';
+		    echo json_encode($response);exit;
+	    }
 	    $sql = "SELECT * FROM user WHERE email = '$email' && mobile = '$mobile'";
 	    $result = mysqli_query($db,$sql);
 	    $count = mysqli_num_rows($result);
@@ -68,9 +82,10 @@ if(isset($_POST))
 		    }
 		    else
 		    {
-		    	$response['status']=false;
-			    $response['data']['message']='Select Image';
-			    echo json_encode($response);exit;
+		    	$img="";
+		    	// $response['status']=false;
+			    // $response['data']['message']='Select Image';
+			    // echo json_encode($response);exit;
 		    }
 	    
 	     	$sql="INSERT INTO user(name, email, mobile, gender, image, address, password,city_id)VALUES('$name','$email','$mobile','$gender','$img','$address','$password','$city_id')"; 
@@ -276,7 +291,7 @@ if(isset($_POST))
     	if ($query != "") 
     	{
     	  	$response['status']=true;
-	    	$response['data']['message']='Post Added';
+	    	$response['data']['message']='Post applied for approval';
 	    	echo json_encode($response);exit;
     	} 
 	    echo json_encode($response);exit;
@@ -382,7 +397,7 @@ if(isset($_POST))
     	if ($query != "") 
     	{
     	  	$response['status']=true;
-	    	$response['data']['message']='Advertisement Added';
+	    	$response['data']['message']='Advertisement applied for approval';
 	    	echo json_encode($response);exit;
     	} 
 	    echo json_encode($response);exit;
