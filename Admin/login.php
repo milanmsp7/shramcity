@@ -15,11 +15,11 @@ if(isset($_POST['login']))
   // $result = $db->query($customer_query);
   // $row = mysqli_fetch_array($result);
   
-  if ($admin_email_id == "krima@gmail.com" && $password == 123123 )
+  if ($admin_email_id == "shramcity@gmail.com" && $password == '123456' )
   {
     // $_SESSION['user']=true;
     // $_SESSION['admin_email_id']='$admin_email_id';
-    $_SESSION['admin_email_id']="krima@gmail.com";
+    $_SESSION['admin_email_id']="shramcity@gmail.com";
     // $email=$_SESSION['admin_email_id'];
     die ('<script type="text/javascript"> window.location.href="index.php"; </script>');
   
