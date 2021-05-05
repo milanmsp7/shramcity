@@ -202,6 +202,19 @@ if(isset($_POST))
 	    while ($city = mysqli_fetch_assoc($check_result)) {
 	    	$city_list['city_info'][] = $city;
 	    }
+	    if(!empty($city_list))
+	    {
+	    	$response['status']=true;
+		    $response['data']=$city_list;
+		    $response['data']['message']='Category found successfully';
+		    echo json_encode($response);exit;
+	    }
+	    else
+	    {
+	    	$response['status']=false;
+		    $response['data']['message']='No category found';
+		    echo json_encode($response);exit;
+	    } 
 	     
 	}
 
