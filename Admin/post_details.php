@@ -1,5 +1,5 @@
 <?php 
-
+$ac = 'post';
 include_once "header.php";
    
 ?>

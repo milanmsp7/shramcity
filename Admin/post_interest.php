@@ -1,5 +1,5 @@
 <?php 
-
+$ac = 'post_interest';
 include_once "header.php";
    
 ?>

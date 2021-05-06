@@ -1,5 +1,5 @@
 <?php 
-
+$ac = 'advertisement';
 include_once "header.php";
    
 ?>

@@ -17,13 +17,13 @@ if (isset($_POST["submit"]))
            chmod($path,0755);
         }
 
-        $img = basename($image);
+        $img = time().basename($image);
         $filename = $path.$img;
         move_uploaded_file($_FILES['image']['tmp_name'],$filename);
     }
 
 
-    $query = mysqli_query($db,"INSERT INTO `category`(`name`,`description`,`image`) VALUES ('".$c_name."','".$description."','".$image."')");
+    $query = mysqli_query($db,"INSERT INTO `category`(`name`,`description`,`image`) VALUES ('".$c_name."','".$description."','".$img."')");
 
     echo "<script>window.location = 'category.php';</script>";
 }

@@ -8,6 +8,7 @@ include_once "header.php";
    
   $row = mysqli_fetch_array($result);
   // print_r($row);
+ 
   
   if (isset($_POST["submit"])) 
   {
@@ -26,13 +27,20 @@ include_once "header.php";
     if(isset($image) && !empty($image))
       {
 
+        $image_old = $row['image'];
+        if(isset($image_old) && !empty($image_old))
+        {
+          unlink("user_images/$image_old");
+
+        }
+
         if(!is_dir($path))
         {
            mkdir($path);
            chmod($path,0755);
         }
 
-        $img = basename($image);
+        $img = time().basename($image);
         $filename = $path.$img;
         move_uploaded_file($_FILES['image']['tmp_name'],$filename);
         $sql="UPDATE `user` SET name='$name' , email = '$email' , mobile = '$mobile' , gender = '$gender' , city_id = '$city_id' , category_id = '$category_id' , image = '$img' , address = '$address'  WHERE id='$p_id'";
@@ -177,7 +185,7 @@ include_once "header.php";
                   
                     <br>
                     <div class="container1" id="img_hide">
-                      <img width="80px" id="img" height="80px" style="vertical-align: sub;" src="post_images/<?php echo $row['image']; ?>">
+                      <img width="80px" id="img" height="80px" style="vertical-align: sub;" src="user_images/<?php echo $row['image']; ?>">
                       <br>
                       <?php echo $row['image']; ?>
                       <div class="middle">
@@ -202,12 +210,13 @@ include_once "header.php";
 <script>
     function delete_image(id)
     {
-     
+        var folder_name = "user_images";
         var delete_img = 'delete';
+        var table_name = 'user';
         $.ajax({
             type: 'POST',
             url: 'image_delete.php',
-            data: {id:id,delete_img:delete_img},
+            data: {id:id , delete_img:delete_img , table_name:table_name , folder_name:folder_name},
             dataType: 'json',
             success:function(data)
             {

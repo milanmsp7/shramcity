@@ -26,7 +26,7 @@ include_once "header.php";
                chmod($path,0755);
           }
 
-          $img = basename($image);
+          $img = time().basename($image);
           $filename = $path.$img;
           move_uploaded_file($_FILES['image']['tmp_name'],$filename);
      }

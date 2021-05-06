@@ -1,4 +1,5 @@
 <?php 
+$ac = 'user';
 include_once "header.php";
    
 ?>

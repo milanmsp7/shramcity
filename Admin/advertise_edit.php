@@ -26,14 +26,19 @@ include_once "header.php";
         
       if(isset($image) && !empty($image))
       {
+        $image_old = $row['image'];
+        if(isset($image_old) && !empty($image_old))
+        {
+          unlink("advertise_images/$image_old");
 
+        }
         if(!is_dir($path))
         {
            mkdir($path);
            chmod($path,0755);
         }
 
-        $img = basename($image);
+        $img = time().basename($image);
         $filename = $path.$img;
         move_uploaded_file($_FILES['image']['tmp_name'],$filename);
         $sql="UPDATE `advertisement` SET category_id ='$category_id',city_id ='$city_id', user_id ='$user_id', description = '$description',image = '$img' , start_date = '$start_date' , end_date = '$end_date'  WHERE id='$p_id'";
@@ -176,7 +181,7 @@ include_once "header.php";
                   
                     <br>
                     <div class="container1" id="img_hide">
-                      <img width="80px" id="img" height="80px" style="vertical-align: sub;" src="post_images/<?php echo $row['image']; ?>">
+                      <img width="80px" id="img" height="80px" style="vertical-align: sub;" src="advertise_images/<?php echo $row['image']; ?>">
                       <br>
                       <?php echo $row['image']; ?>
                       <div class="middle">
@@ -211,12 +216,13 @@ include_once "header.php";
 <script>
     function delete_image(id)
     {
-     
+        var folder_name = "advertise_images";
         var delete_img = 'delete';
+        var table_name = 'advertisement';
         $.ajax({
             type: 'POST',
             url: 'image_delete.php',
-            data: {id:id,delete_img:delete_img},
+            data: {id:id,delete_img:delete_img,table_name:table_name, folder_name:folder_name},
             dataType: 'json',
             success:function(data)
             {

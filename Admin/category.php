@@ -1,5 +1,5 @@
 <?php 
-// $ac = 'category';
+$ac = 'category';
 
 include_once "header.php";
    

@@ -14,8 +14,6 @@ include_once "header.php";
     $end_date = $_POST['end_date'];
     // echo date("Y-m-d",strtotime($_POST['start_Date']));
     
-
-    
      if(isset($image))
      {
           $path = "advertise_images/";
@@ -26,7 +24,7 @@ include_once "header.php";
                chmod($path,0755);
           }
 
-          $img = basename($image);
+          $img = time().basename($image);
           $filename = $path.$img;
           move_uploaded_file($_FILES['image']['tmp_name'],$filename);
      }

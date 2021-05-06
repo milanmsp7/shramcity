@@ -1,5 +1,5 @@
 <?php
-$ac = "product";
+
 session_start();
 include_once "db.php";
 if(!isset($_SESSION["admin_email_id"]))  
@@ -81,10 +81,10 @@ if(!isset($_SESSION["admin_email_id"]))
       <span class="heading">Main</span>
         <ul class="list-unstyled">
           <li class="<?php if($ac == 'home'){ echo "active"; }?>"><a href="index.php"><i class="icon-home"></i>Home </a></li>
-          <li class="<?php if($ac == 'order'){ echo "active"; }?>"><a href="post_details.php"> <i class="icon-grid"></i>Posts </a></li>
+          <li class="<?php if($ac == 'post'){ echo "active"; }?>"><a href="post_details.php"> <i class="icon-grid"></i>Posts </a></li>
           <li class="<?php if($ac == 'advertisement'){ echo "active"; }?>"><a href="advertise_detail.php"> <i class="fa fa-bar-chart"></i>Advertisement </a></li>
-          <li class="<?php if($ac == 'product'){ echo "active"; }?>"><a href="user.php"> <i class="icon-padnote"></i>Register user </a></li>
+          <li class="<?php if($ac == 'user'){ echo "active"; }?>"><a href="user.php"> <i class="icon-user-1"></i>Register user </a></li>
           <li class="<?php if($ac == 'category'){ echo "active"; }?>"><a href="category.php"> <i class="icon-windows"></i>Category </a></li>
-          <li><a href="post_interest.php"> <i class="icon-windows"></i>Post Interested </a></li>
+          <li class="<?php if($ac == 'post_interest'){ echo "active"; }?>" ><a href="post_interest.php"> <i class="icon-padnote "></i>Post Interested </a></li>
         </ul> 
       </nav>

@@ -404,7 +404,14 @@ if(isset($_POST))
 	    	$response['data']['message']='Please select user';
 	    	echo json_encode($response);exit;
 	    }
-	   
+	    $post_interest_find = mysqli_query($db,"SELECT * FROM post_interest WHERE user_id = '$user_id' AND post_id = '$post_id'");
+	    $result = mysqli_num_rows($post_interest_find);
+	    if($result > 0)
+	    {
+	    	$response['status']=false;
+		    $response['data']['message']='Post interest already added';
+		    echo json_encode($response);exit;
+	    }
 	   
 	    $post_find = mysqli_query($db,"SELECT * FROM post WHERE id = '$post_id'");
 	    $result = mysqli_num_rows($post_find);
@@ -450,6 +457,159 @@ if(isset($_POST))
 		    echo json_encode($response);exit;
 	    }    	
 
+	   
+	}
+	if(isset($_GET['get_post']) && !empty($_GET['get_post']) && $_GET['get_post'] == '1')
+	{
+		$plus = "";
+		$city_id = isset($_POST['city_id'])? $_POST['city_id']:'';
+	    $category_id = isset($_POST['category_id'])? $_POST['category_id']:'';
+	    if(isset($city_id) && $city_id !="")
+	    {
+			$city_find = mysqli_query($db,"SELECT * FROM city WHERE id = '$city_id'");
+		    $result = mysqli_num_rows($city_find);
+		    if($result == 0 && empty($result))
+		    {
+		    	$response['status']=false;
+			    $response['data']['message']='City not Found';
+			    echo json_encode($response);exit;
+		    }else{
+	    		$plus.=" AND city_id = '$city_id'";
+		    }
+	    }
+	    if(isset($category_id) && $category_id !="")
+	    {
+	    	$category_find = mysqli_query($db,"SELECT * FROM category WHERE id = '$category_id'");
+		    $result = mysqli_num_rows($category_find);
+		    if($result == 0 && empty($result))
+		    {
+		    	$response['status']=false;
+			    $response['data']['message']='Category not Found';
+			    echo json_encode($response);exit;
+		    }else{
+	    		$plus.=" AND category_id = '$category_id'";
+	    	}
+	    }
+	    $post = "SELECT *,CONCAT('http://".$_SERVER['SERVER_NAME']."/shramcity/admin/post_images/',image) as image , (SELECT name FROM category WHERE id = post.category_id) as category_name ,(SELECT name FROM city WHERE id = post.city_id) as city_name, (SELECT name FROM user WHERE id = post.user_id) as user_name FROM post WHERE status = 1 $plus";
+	    $check_result = mysqli_query($db,$post);
+	    // $category_list = mysqli_fetch_assoc($check_result);
+	    
+	    $post_list=[];
+	    while ($post = mysqli_fetch_assoc($check_result)) {
+	    	$post_list['post_info'][] = $post;
+	    }
+	    // echo "<pre>";print_r($post_list);exit;
+	    if(!empty($post_list))
+	    {
+	    	$response['status']=true;
+		    $response['data']=$post_list;
+		    $response['data']['message']='post found successfully';
+		    echo json_encode($response);exit;
+	    }
+	    else
+	    {
+	    	$response['status']=false;
+		    $response['data']['message']='No post found';
+		    echo json_encode($response);exit;
+	    }    	
+	   
+	}
+
+	if(isset($_GET['get_advertisement']) && !empty($_GET['get_advertisement']) && $_GET['get_advertisement'] == '1')
+	{
+		$plus = "";
+		$city_id = isset($_POST['city_id'])? $_POST['city_id']:'';
+	    $category_id = isset($_POST['category_id'])? $_POST['category_id']:'';
+	    if(isset($city_id) && $city_id !="")
+	    {
+			$city_find = mysqli_query($db,"SELECT * FROM city WHERE id = '$city_id'");
+		    $result = mysqli_num_rows($city_find);
+		    if($result == 0 && empty($result))
+		    {
+		    	$response['status']=false;
+			    $response['data']['message']='City not Found';
+			    echo json_encode($response);exit;
+		    }else{
+	    		$plus.=" AND city_id = '$city_id'";
+		    }
+	    }
+	    if(isset($category_id) && $category_id !="")
+	    {
+	    	$category_find = mysqli_query($db,"SELECT * FROM category WHERE id = '$category_id'");
+		    $result = mysqli_num_rows($category_find);
+		    if($result == 0 && empty($result))
+		    {
+		    	$response['status']=false;
+			    $response['data']['message']='Category not Found';
+			    echo json_encode($response);exit;
+		    }else{
+	    		$plus.=" AND category_id = '$category_id'";
+	    	}
+	    }
+		$plus.= " AND start_date <= NOW() AND end_date >= NOW()";
+	    $advertise = "SELECT *,CONCAT('http://".$_SERVER['SERVER_NAME']."/shramcity/admin/advertise_images/',image) as image ,(SELECT name FROM category WHERE id = advertisement.category_id) as category_name , (SELECT name FROM city WHERE id = advertisement.city_id) as city_name, (SELECT name FROM user WHERE id = advertisement.user_id) as user_name FROM advertisement WHERE status = 1 $plus";
+	    
+	    $check_result = mysqli_query($db,$advertise);
+	    // $category_list = mysqli_fetch_assoc($check_result);
+	    
+	    $advertise_list=[];
+	    while ($advertise = mysqli_fetch_assoc($check_result)) {
+	    	$advertise_list['advertise_info'][] = $advertise;
+	    }
+	    // echo "<pre>";print_r($advertise_list);exit;
+	    if(!empty($advertise_list))
+	    {
+	    	$response['status']=true;
+		    $response['data']=$advertise_list;
+		    $response['data']['message']='advertisement found successfully';
+		    echo json_encode($response);exit;
+	    }
+	    else
+	    {
+	    	$response['status']=false;
+		    $response['data']['message']='No advertisement found';
+		    echo json_encode($response);exit;
+	    }    	
+	   
+	}
+
+	if(isset($_GET['get_post_interest']) && !empty($_GET['get_post_interest']) && $_GET['get_post_interest'] == '1')
+	{
+		$plus = "";
+		$post_id = isset($_POST['post_id'])? $_POST['post_id']:'';
+	   
+	    if(isset($post_id) && $post_id != "")
+	    {
+	    	$plus.="WHERE post_id = '$post_id'";
+	    }
+	    
+
+	    $post_interest = "SELECT post_interest.*,user.name,user.mobile,(SELECT name FROM user WHERE id=post.user_id) as post_owner FROM post_interest
+       LEFT JOIN user
+       ON user.id = post_interest.user_id
+       LEFT JOIN post
+       ON post.id = post_interest.post_id $plus";
+	    $check_result = mysqli_query($db,$post_interest);
+	    // $category_list = mysqli_fetch_assoc($check_result);
+	    
+	    $post_interest_list=[];
+	    while ($advertise = mysqli_fetch_assoc($check_result)) {
+	    	$post_interest_list['post_interest_info'][] = $advertise;
+	    }
+	    // echo "<pre>";print_r($post_interest_list);exit;
+	    if(!empty($post_interest_list))
+	    {
+	    	$response['status']=true;
+		    $response['data']=$post_interest_list;
+		    $response['data']['message']='post interest found successfully';
+		    echo json_encode($response);exit;
+	    }
+	    else
+	    {
+	    	$response['status']=false;
+		    $response['data']['message']='No interested post found';
+		    echo json_encode($response);exit;
+	    }    	
 	   
 	}
 	echo json_encode($response);exit;
